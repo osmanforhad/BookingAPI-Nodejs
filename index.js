@@ -19,10 +19,13 @@ const connect = async () => {
 };
 
 //middlewares
+app.use(express.json());
+
+//routes
 app.use("/api/auth", authRoute);
-app.use("/api/users", authRoute);
-app.use("/api/hotels", authRoute);
-app.use("/api/rooms", authRoute);
+app.use("/api/users", usersRoute);
+app.use("/api/hotels", hotelsRoute);
+app.use("/api/rooms", roomsRoute);
 
 app.listen(5000, () => {
     connect();
