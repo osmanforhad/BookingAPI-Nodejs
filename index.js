@@ -18,7 +18,7 @@ const connect = async () => {
       }
 };
 
-//middlewares
+//Express middleware
 app.use(express.json());
 
 //routes
@@ -26,6 +26,13 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/hotels", hotelsRoute);
 app.use("/api/rooms", roomsRoute);
+
+//Error Handaling middleware
+app.use((error, request, response, next) => {
+  const errorStatus = error.status || 500;
+  const errorMessage = error.message || "Some thing went wrong!";
+  return response.status(errorStatus).json({success:false, status: errorStatus, message: errorMessage, stack: error.stack});
+});
 
 app.listen(5000, () => {
     connect();
