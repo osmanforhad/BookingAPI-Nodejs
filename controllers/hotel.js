@@ -45,3 +45,15 @@ export const getHotels = async(request, response, next) => {
         next(error);
     }
 }
+
+export const countByCity = async(request, response, next) => {
+    const cities = request.query.cities.split(",");
+    try{
+        const lsit = await Promise.all(cities.map(city=>{
+            return Hotel.countDocuments({city:city});
+        }));
+        response.status(200).json(lsit);
+    } catch(error){
+        next(error);
+    }
+}
